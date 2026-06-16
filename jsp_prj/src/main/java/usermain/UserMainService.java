@@ -11,7 +11,31 @@ public class UserMainService {
     public UserMainService() {
         umDAO = UserMainDAO.getInstance();
     }
-
+    
+    public int pageScale() {
+	   return 20;
+    }
+   
+   	public int totalPage(int totalCount, int pageScale) {
+   		int page=totalCount/pageScale;
+   		if(totalCount%pageScale!=0) {
+   			page++;
+   		}
+   		return page;
+   	}
+   	
+   	public int startNum(int currentPage, int pageScale) {
+   		return (currentPage -1)*pageScale+1;
+   	}
+   	
+   	public int endNum(int currentPage, int pageScale) {
+   		return currentPage*pageScale;
+   	}
+   
+   	public int totalCount(RangeDTO range) {
+   		return umDAO.selectTotalCount(range);
+   	}
+   
     public List<ProductDTO> searchBest() {
         return umDAO.selectBest();
     }
@@ -24,9 +48,19 @@ public class UserMainService {
         return umDAO.selectBannerProducts();
     }
 
-    public List<ProductDTO> getCategory(String category) {
-        return umDAO.selectCategory(category);
+    public List<ProductDTO> getCategory(RangeDTO range) {
+    	
+    	int pageScale=pageScale();
+    	
+    	int start=startNum(range.getStartNum(),pageScale);
+    	int end=endNum(range.getStartNum(),pageScale);
+    	
+    	range.setStartNum(start);
+    	range.setEndNum(end);
+    	
+        return umDAO.selectCategory(range);
     }
 	
+   
 
 }
