@@ -17,6 +17,7 @@ public class RangeDTO {
 		this.endNum = endNum;
 		this.searchType = searchType;
 		this.keyword = keyword;
+		
 	}
 	
 	public int getStartNum() {
@@ -43,11 +44,15 @@ public class RangeDTO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
+	
+
 	@Override
 	public String toString() {
 		return "RangeDTO [startNum=" + startNum + ", endNum=" + endNum + ", searchType=" + searchType + ", keyword="
 				+ keyword + "]";
 	}
+
+	
 	
 	
 	

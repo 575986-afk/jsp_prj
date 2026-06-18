@@ -44,20 +44,27 @@ public class UserMainService {
         return umDAO.selectSale();
     }
 
-    public List<ProductDTO> getBannerProducts() {
-        return umDAO.selectBannerProducts();
+    public String[] getBannerImages() {
+    	
+    	String[] banners=new String[3];
+    	
+    	banners[0]="images/imgbanner1.png";
+    	banners[1]="images/imgbanner2.png";
+    	banners[2]="images/imgbanner3.png";
+    	
+        return banners;
     }
 
-    public List<ProductDTO> getCategory(RangeDTO range) {
-    	
-    	int pageScale=pageScale();
-    	
-    	int start=startNum(range.getStartNum(),pageScale);
-    	int end=endNum(range.getStartNum(),pageScale);
-    	
-    	range.setStartNum(start);
-    	range.setEndNum(end);
-    	
+    public List<ProductDTO> getCategory(RangeDTO range, int page) {
+
+        int pageScale = 20;
+
+        int start = (page - 1) * pageScale + 1;
+        int end = page * pageScale;
+
+        range.setStartNum(start);
+        range.setEndNum(end);
+
         return umDAO.selectCategory(range);
     }
 	

@@ -40,6 +40,13 @@ public class DBConnection {
 		
 	}//getinstance
 	
+	public Connection getConn() throws SQLException{
+		
+		File file=new File("src/main/java/db/database.properties");
+		
+		return getConn(file);
+	}
+	
 	/**
 	 * DBMS와 연결된 Connection을 반환하는 일.
 	 * @param prop DBMS 의 정보를 로딩한 객체
@@ -80,14 +87,29 @@ public class DBConnection {
 		return con;
 	}//getconn
 	
-	public void dbClose(ResultSet rs, Statement stmt, Connection con)throws
-	SQLException{
+	public void dbClose(ResultSet rs, Statement stmt, Connection con) {
 		try {
-			if (rs!=null) {rs.close();}
-			if (stmt!=null) {stmt.close();}
-		} finally {
-			if (con!=null) {con.close();}
-		}//catch
+
+	        if(rs != null) rs.close();
+	        if(stmt != null) stmt.close();
+
+	    } catch(SQLException e) {
+
+	        e.printStackTrace();
+
+	    } finally {
+
+	        try {
+
+	            if(con != null) con.close();
+
+	        } catch(SQLException e) {
+
+	            e.printStackTrace();
+
+	        }
+
+	    }
 		
 	}//dbclose
 	
