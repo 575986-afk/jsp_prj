@@ -68,6 +68,7 @@ public class UserMainDAO {
 			DBConnection.getInstance().dbClose(rs, pstmt, con);
 		}
 		
+		
 		return list;
 	}
 	
