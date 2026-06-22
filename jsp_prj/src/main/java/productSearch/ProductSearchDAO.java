@@ -1,0 +1,79 @@
+package productSearch;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import db.DBConnection;
+import productDetail.ProductDTO;
+
+public class ProductSearchDAO {
+
+	private static ProductSearchDAO psDAO;
+	
+	private ProductSearchDAO() {
+		
+	}
+	
+	public static ProductSearchDAO getInstance() {
+		if(psDAO==null) {
+			psDAO=new ProductSearchDAO();
+		}
+		return psDAO;
+	}
+	
+	public List<ProductDTO> selectProduct(String prdName){
+		
+		List<ProductDTO> list = new ArrayList<ProductDTO>();
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            con = DBConnection.getInstance().getConn();
+
+            StringBuilder sql = new StringBuilder();
+
+            sql.append(" SELECT PRODUCT_ID, PRODUCT_NAME, ");
+            sql.append(" PRODUCT_TYPE, PRICE, DISCOUNT ");
+            sql.append(" FROM PRODUCT ");
+            sql.append(" WHERE PRODUCT_NAME LIKE ? ");
+
+            pstmt = con.prepareStatement(sql.toString());
+            pstmt.setString(1, "%" + prdName + "%");
+
+            rs = pstmt.executeQuery();
+
+            ProductDTO pDTO = null;
+
+            while(rs.next()) {
+
+                pDTO = new ProductDTO();
+
+                pDTO.setPrdID(rs.getString("PRODUCT_ID"));
+                pDTO.setPrdName(rs.getString("PRODUCT_NAME"));
+                pDTO.setPrdType(rs.getString("PRODUCT_TYPE"));
+                pDTO.setPrice(rs.getInt("PRICE"));
+                pDTO.setDiscount(rs.getInt("DISCOUNT"));
+
+                list.add(pDTO);
+            }
+
+        } catch(Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            DBConnection.getInstance().dbClose(rs, pstmt, con);
+
+        }
+
+        return list;
+    
+	}
+}

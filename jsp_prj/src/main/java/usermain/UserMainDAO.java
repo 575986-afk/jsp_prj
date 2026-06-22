@@ -165,7 +165,7 @@ public class UserMainDAO {
 	//카테고리에 맞는 상품 전체수
 	public int selectTotalCount(RangeDTO range) {
 		
-		int count=0;
+		int cnt=0;
 		
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -184,7 +184,7 @@ public class UserMainDAO {
 	        rs = pstmt.executeQuery();
 
 	        if (rs.next()) {
-	            count = rs.getInt(1);
+	            cnt = rs.getInt(1);
 	        }
 
 	    } catch(Exception e) {
@@ -193,7 +193,7 @@ public class UserMainDAO {
 	        DBConnection.getInstance().dbClose(rs, pstmt, con);
 	    }
 
-	    return count;
+	    return cnt;
 	}
 
 	

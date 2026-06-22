@@ -12,6 +12,7 @@ public class ProductDTO {
 	private String description;
 	private int discount;
 	private String manufacturer;
+	private String storageType;
 	private String origin;
 	private int underagePurchase;
 	private int weight;
@@ -28,7 +29,7 @@ public class ProductDTO {
 	public ProductDTO(String prdID, String prdName, String subHeading, String prdType, int price, String notification,
 			String description, int discount, String manufacturer, String origin, int underagePurchase, int weight,
 			Date expirationDate, String unit, int minPurchase, int maxPurchase, Date productInputDate,
-			String categoryName, String img) {
+			String categoryName, String img, String storageType) {
 		super();
 		this.prdID = prdID;
 		this.prdName = prdName;
@@ -49,6 +50,7 @@ public class ProductDTO {
 		this.productInputDate = productInputDate;
 		this.categoryName = categoryName;
 		this.img = img;
+		this.storageType=storageType;
 	}
 	public String getPrdID() {
 		return prdID;
@@ -164,17 +166,23 @@ public class ProductDTO {
 	public void setImg(String img) {
 		this.img = img;
 	}
+	public String getStorageType() {
+		return storageType;
+	}
+	public void setStorageType(String storageType) {
+		this.storageType = storageType;
+	}
 	@Override
 	public String toString() {
 		return "ProductDTO [prdID=" + prdID + ", prdName=" + prdName + ", subHeading=" + subHeading + ", prdType="
 				+ prdType + ", price=" + price + ", notification=" + notification + ", description=" + description
-				+ ", discount=" + discount + ", manufacturer=" + manufacturer + ", origin=" + origin
-				+ ", underagePurchase=" + underagePurchase + ", weight=" + weight + ", expirationDate=" + expirationDate
-				+ ", unit=" + unit + ", minPurchase=" + minPurchase + ", maxPurchase=" + maxPurchase
-				+ ", productInputDate=" + productInputDate + ", categoryName=" + categoryName + ", img=" + img + "]";
+				+ ", discount=" + discount + ", manufacturer=" + manufacturer + ", storageType=" + storageType
+				+ ", origin=" + origin + ", underagePurchase=" + underagePurchase + ", weight=" + weight
+				+ ", expirationDate=" + expirationDate + ", unit=" + unit + ", minPurchase=" + minPurchase
+				+ ", maxPurchase=" + maxPurchase + ", productInputDate=" + productInputDate + ", categoryName="
+				+ categoryName + ", img=" + img + "]";
 	}
-	
-	
+
 	
 	
 }

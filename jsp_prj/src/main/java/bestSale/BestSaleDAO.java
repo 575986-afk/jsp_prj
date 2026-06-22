@@ -8,6 +8,7 @@ import java.util.List;
 
 import db.DBConnection;
 import productDetail.ProductDTO;
+import usermain.RangeDTO;
 
 public class BestSaleDAO {
 
@@ -24,7 +25,7 @@ public class BestSaleDAO {
 		return bsDAO;
 	}
 	//베스트 상품 조회
-	public List<ProductDTO> bestProduct(String categoryName, int minPrice, int maxPrice){
+	public List<ProductDTO> bestProduct(RangeDTO rDTO){
 		
 		List<ProductDTO> list=new ArrayList<>();
 
@@ -36,23 +37,31 @@ public class BestSaleDAO {
 	    	
 	    	con=DBConnection.getInstance().getConn();
 	    	
-	    	String sql="SELECT p.PRODUCT_ID,p.PRODUCT_NAME,SUM(od.QUANTITY) sales_count"
-	    			+ "	FROM PRODUCT p"
-	    			+ " INNER JOIN ORDER_DETAILS od"
-	    			+ "	ON p.PRODUCT_ID = od.PRODUCT_ID"
-	    			+ "	GROUP BY p.PRODUCT_ID, p.PRODUCT_NAME"
-	    			+ "	ORDER BY sales_count DESC";
+	    	String sql="SELECT p.PRODUCT_ID,"
+	    			+ "       p.PRODUCT_NAME,"
+	    			+ "       p.PRICE,"
+	    			+ "       SUM(od.QUANTITY) sales_count"
+	    			+ "FROM PRODUCT p"
+	    			+ "INNER JOIN ORDER_DETAILS od"
+	    			+ "ON p.PRODUCT_ID = od.PRODUCT_ID"
+	    			+ "GROUP BY p.PRODUCT_ID,"
+	    			+ "         p.PRODUCT_NAME,"
+	    			+ "         p.PRICE"
+	    			+ "ORDER BY sales_count DESC";
 	    	
 	    	pstmt=con.prepareStatement(sql);
 	    	
 	    	rs=pstmt.executeQuery();
 	    	
 	    	while(rs.next()) {
-	    		ProductDTO pDTO=new ProductDTO();
-	    		
-	    		
-	    		
-	    		list.add(pDTO);
+
+	    	    ProductDTO pDTO = new ProductDTO();
+
+	    	    pDTO.setPrdID(rs.getString("PRODUCT_ID"));
+	    	    pDTO.setPrdName(rs.getString("PRODUCT_NAME"));
+	    	    pDTO.setPrice(rs.getInt("PRICE"));
+
+	    	    list.add(pDTO);
 	    	}
 	    	
 	    }catch(Exception e) {
@@ -64,7 +73,7 @@ public class BestSaleDAO {
 		return list;
 	}
 	//인기급상숭 상품 조회
-	public List<ProductDTO> risingProduct(String categoryName, int minPrice, int maxPrice){
+	public List<ProductDTO> risingProduct(RangeDTO rDTO){
 		
 		List<ProductDTO> list=new ArrayList<>();
 
@@ -90,6 +99,18 @@ public class BestSaleDAO {
 	    	
 	    	rs=pstmt.executeQuery();
 	    	
+	    		while(rs.next()) {
+
+	    		    ProductDTO pDTO = new ProductDTO();
+
+	    		    pDTO.setPrdID(rs.getString("PRODUCT_ID"));
+	    		    pDTO.setPrdName(rs.getString("PRODUCT_NAME"));
+	    		    pDTO.setPrice(rs.getInt("PRICE"));
+
+	    		    list.add(pDTO);
+	    		}
+	    		
+	    	
 	    }catch(Exception e) {
 	    	e.printStackTrace();
 	    }finally {
@@ -100,7 +121,7 @@ public class BestSaleDAO {
 	}
 	
 	//알뜰 쇼핑 상품 조회
-	public List<ProductDTO> economyProduct(String categoryName, int minPrice, int maxPrice){
+	public List<ProductDTO> economyProduct(RangeDTO rDTO){
 		
 		List<ProductDTO> list=new ArrayList<>();
 
@@ -118,6 +139,17 @@ public class BestSaleDAO {
 	    	
 	    	rs=pstmt.executeQuery();
 	    	
+	    	while(rs.next()) {
+
+	    	    ProductDTO pDTO = new ProductDTO();
+
+	    	    pDTO.setPrdID(rs.getString("PRODUCT_ID"));
+	    	    pDTO.setPrdName(rs.getString("PRODUCT_NAME"));
+	    	    pDTO.setPrice(rs.getInt("PRICE"));
+
+	    	    list.add(pDTO);
+	    	}
+	    	
 	    }catch(Exception e) {
 	    	e.printStackTrace();
 	    }finally {
@@ -128,7 +160,7 @@ public class BestSaleDAO {
 	}
 	
 	//반값 세일 상품 조회
-	public List<ProductDTO> halfSaleProduct(String categoryName, int minPrice, int maxPrice){
+	public List<ProductDTO> halfSaleProduct(RangeDTO rDTO){
 		
 		List<ProductDTO> list=new ArrayList<>();
 
@@ -146,6 +178,17 @@ public class BestSaleDAO {
 	    	
 	    	rs=pstmt.executeQuery();
 	    	
+	    	while(rs.next()) {
+
+	    	    ProductDTO pDTO = new ProductDTO();
+
+	    	    pDTO.setPrdID(rs.getString("PRODUCT_ID"));
+	    	    pDTO.setPrdName(rs.getString("PRODUCT_NAME"));
+	    	    pDTO.setPrice(rs.getInt("PRICE"));
+
+	    	    list.add(pDTO);
+	    	}
+	    	
 	    }catch(Exception e) {
 	    	e.printStackTrace();
 	    }finally {
@@ -154,25 +197,25 @@ public class BestSaleDAO {
 		
 		return list;
 	}
-	public int getTotalBestCount(String categoryName, int minPrice, int maxPrice) {
+	public int getTotalBestCount(RangeDTO rDTO) {
 		int count=0;
 		
 		return count; 
 	}
 
-	public int getTotalRisingCount(String categoryName, int minPrice, int maxPrice) {
+	public int getTotalRisingCount(RangeDTO rDTO) {
 		int count=0;
 		
 		return count;
 	}
 
-	public int getTotalEconomyCount(String categoryName, int minPrice, int maxPrice) {
+	public int getTotalEconomyCount(RangeDTO rDTO) {
 		int count=0;
 		
 		return count;
 	}
 
-	public int getTotalHalfSaleCount(String categoryName, int minPrice, int maxPrice) {
+	public int getTotalHalfSaleCount(RangeDTO rDTO) {
 		int count=0;
 		
 		return count;

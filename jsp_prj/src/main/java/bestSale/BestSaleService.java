@@ -3,6 +3,7 @@ package bestSale;
 import java.util.List;
 
 import productDetail.ProductDTO;
+import usermain.RangeDTO;
 
 public class BestSaleService {
 
@@ -13,36 +14,36 @@ public class BestSaleService {
 	}
 	
 	//베스트 랭킹 목록 조회
-	public List<ProductDTO> searchBest(String categoryName, int minPrice, int maxPrice){
-		return bsDAO.bestProduct(categoryName,minPrice,maxPrice);
+	public List<ProductDTO> searchBest(RangeDTO rDTO){
+		return bsDAO.bestProduct(rDTO);
 	}
 	//인기급상승 목록 조회
-	public List<ProductDTO> searchRising(String categoryName, int minPrice, int maxPrice){
-		return bsDAO.risingProduct(categoryName, minPrice, maxPrice);
+	public List<ProductDTO> searchRising(RangeDTO rDTO){
+		return bsDAO.risingProduct(rDTO);
 	}
 	//알뜰쇼핑 목록조회
-	public List<ProductDTO> searchEconomy(String categoryName, int minPrice, int maxPrice){
-		return bsDAO.economyProduct(categoryName, minPrice, maxPrice);
+	public List<ProductDTO> searchEconomy(RangeDTO rDTO){
+		return bsDAO.economyProduct(rDTO);
 	}
 	//반값세일 목록조회
-	public List<ProductDTO> searchHalfSale(String categoryName, int minPrice, int maxPrice){
-		return bsDAO.halfSaleProduct(categoryName, minPrice, maxPrice);
+	public List<ProductDTO> searchHalfSale(RangeDTO rDTO){
+		return bsDAO.halfSaleProduct(rDTO);
 	}
 	//베스트 랭킹 상품 총 개수
-	public int getTotalBestCount(String categoryName, int minPrice, int maxPrice) {
-		return bsDAO.getTotalBestCount(categoryName, minPrice, maxPrice);
+	public int getTotalBestCount(RangeDTO rDTO) {
+		return bsDAO.getTotalBestCount(rDTO);
 	}
 	//인기 급상승 상품 총개수
-	public int getTotalRisingCount(String categoryName, int minPrice, int maxPrice) {
-		return bsDAO.getTotalRisingCount(categoryName, minPrice, maxPrice);
+	public int getTotalRisingCount(RangeDTO rDTO) {
+		return bsDAO.getTotalRisingCount(rDTO);
 	}
 	//알뜰쇼핑 상품 총개수
-	public int getTotalEconomyCount(String categoryName, int minPrice, int maxPrice) {
-		return bsDAO.getTotalEconomyCount(categoryName, minPrice, maxPrice);
+	public int getTotalEconomyCount(RangeDTO rDTO) {
+		return bsDAO.getTotalEconomyCount(rDTO);
 	}
 	//반값세일 상품 총개수
-	public int getTotalHalfSaleCount(String categoryName, int minPrice, int maxPrice) {
-		return bsDAO.getTotalHalfSaleCount(categoryName, minPrice, maxPrice);
+	public int getTotalHalfSaleCount(RangeDTO rDTO) {
+		return bsDAO.getTotalHalfSaleCount(rDTO);
 	}
 	
 	
