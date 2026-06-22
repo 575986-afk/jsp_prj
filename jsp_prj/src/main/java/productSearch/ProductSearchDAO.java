@@ -23,7 +23,7 @@ public class ProductSearchDAO {
 		}
 		return psDAO;
 	}
-	
+	//상품명 검색을 통한 상품 목록 조회 
 	public List<ProductDTO> selectProduct(String prdName){
 		
 		List<ProductDTO> list = new ArrayList<ProductDTO>();

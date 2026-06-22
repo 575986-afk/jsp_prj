@@ -12,6 +12,7 @@ public class ProductSearchService {
 		psDAO=ProductSearchDAO.getInstance();
 	}
 	
+	//상품명 검색을 통한 상품 목록 조회 
 	public List<ProductDTO> searchProduct(String prdName){
 		
 		return psDAO.selectProduct(prdName);
