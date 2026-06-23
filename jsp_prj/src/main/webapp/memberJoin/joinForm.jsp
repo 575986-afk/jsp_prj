@@ -22,9 +22,10 @@
         <% if (request.getAttribute("errorMessage") != null) { %>
         <div class="member-error"><%=request.getAttribute("errorMessage")%></div>
         <% } %>
+        
 
         <form id="joinForm" method="post"
-              action="<%=request.getContextPath()%>/memberJoin/joinComplete.do" novalidate>
+              action="<%=request.getContextPath()%>/memberJoin/joinComplete.jsp" novalidate>
             <input type="hidden" name="smsReceiveYN" value="1">
             <input type="hidden" name="emailReceiveYN" value="0">
             <input type="hidden" id="codeChecked" value="N">
@@ -113,8 +114,9 @@
             <div id="clientError" class="member-error" hidden></div>
             <div class="member-actions">
                 <a class="member-button member-button-light"
-                   href="<%=request.getContextPath()%>/member/join-agree.do">이전</a>
-                <button class="member-button" type="submit">가입하기</button>
+                   href="<%=request.getContextPath()%>/memberJoin/join-agree.do">이전</a>
+                <!-- <button class="member-button" type="submit">가입하기</button> -->
+                <input type="submit" value="가입"/>
             </div>
         </form>
     </section>
