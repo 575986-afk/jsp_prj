@@ -1,4 +1,4 @@
-<%@page import="kr.co.sist.user.member.memberService"%>
+<%@page import="kr.co.sist.user.member.MemberService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/siteProperty.jsp" %>
@@ -66,7 +66,7 @@ function sendId(id){
 	String id=request.getParameter("id");
 		if(id!=null && !"".equals(id)){
 			//중복확인 시작
-			memberService ms=new memberService();
+			MemberService ms=new MemberService();
 			boolean idFlag=ms.searchDupId(id);
 			pageContext.setAttribute("idFlag", !idFlag);
 			%>

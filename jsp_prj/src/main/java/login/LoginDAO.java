@@ -3,8 +3,10 @@ package login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import db.DBConnection;
+import kr.co.sist.dao.GetConnection;
 import signup.ClientDTO;
 
 public class LoginDAO {
@@ -30,18 +32,21 @@ public class LoginDAO {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
+		GetConnection gc=GetConnection.getInstance();
+		
 		try {
-			con=DBConnection.getInstance().getConn();
+			
+			con=gc.getConn("dbcp");
 			
 			StringBuilder sql=new StringBuilder();
-			sql.append("SELECT CLIENT_ID, CLIENT_NAME");
+			sql.append("SELECT CLIENT_ID, CLIENT_NAME ");
 			sql.append("FROM CLIENT");
-			sql.append("WHERE CLIENT_ID=? AND CLIENT_HASH=?");
+			sql.append("WHERE CLIENT_ID=? AND CLIENT_HASH=? ");
 			
 			pstmt=con.prepareStatement(sql.toString());
 			
-			pstmt.setString(1, "CLIENT_ID");
-			pstmt.setString(2, "CLIENT_HASH");
+			pstmt.setString(1, clientId);
+			pstmt.setString(2, clientPassword);
 			
 			rs=pstmt.executeQuery();
 			
@@ -57,7 +62,11 @@ public class LoginDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			
+			try {
+				gc.dbClose(rs, pstmt, con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return cDTO;

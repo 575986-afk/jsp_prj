@@ -15,6 +15,14 @@
 
 <meta name="theme-color" content="#712cf9">
 
+<script src="http://localhost/jsp_prj/common/js/color-modes.js"></script>
+<link href="http://localhost/jsp_prj/common/css/bootstrap.min.css" rel="stylesheet"
+	>
+	
+<link href="http://localhost/jsp_prj/common/css/carousel.css" rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <c:import url="${CommonURL}/fragments/external_file.jsp"/>
 
 <style>
@@ -163,7 +171,7 @@
    </div>
    <header data-bs-theme="dark">
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-         <c:import url="${CommonURL}/fragments/navigationBar.jsp"/>
+         <c:import url="/fragments/navigationBar.jsp"/>
       </nav>
    </header>
    <main>

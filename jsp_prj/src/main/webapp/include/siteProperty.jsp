@@ -11,7 +11,7 @@
 	StringBuilder commonUrl=new StringBuilder();
 	commonUrl.append(spVO.getProtocal())
 	.append(spVO.getServer_name())
-	//.append(spVO.getServer_port())
+	.append(spVO.getServer_port())
 	.append(spVO.getContext_root());
 	
 	application.setAttribute("CommonURL", commonUrl);

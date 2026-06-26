@@ -1,5 +1,5 @@
 <%@page import="org.eclipse.jdt.internal.compiler.ast.IfStatement"%>
-<%@page import="kr.co.sist.user.member.memberService"%>
+<%@page import="kr.co.sist.user.member.MemberService"%>
 <%@page import="org.apache.catalina.tribes.MembershipService"%>
 <%@page import="kr.co.sist.user.member.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -34,7 +34,14 @@ request.setCharacterEncoding("UTF-8");
             <%
             
             //web parameter 값 받기
-            memberService ms=new memberService();
+            MemberService ms=new MemberService();
+            //아이디가 사용중인지를 먼저 체크
+            if(ms.searchDupId(mDTO.getId())){
+            %>
+            아이디가 이미 사용중입니다.<a href="javascript:history.back();">이전페이지로</a>
+            <%	
+            }else{//회원가입 실패: DBMS에 문제가 생긴 경우
+            //회원가입 작업을 수행
             boolean flag=ms.addMember(mDTO);
             
             if(flag){//회원가입 성공
@@ -46,13 +53,14 @@ request.setCharacterEncoding("UTF-8");
  				<label>이메일</label> : ${param.email }<br> 
  				<label>전화번호</label> : <%=mDTO.getPhone1() %>-<%=mDTO.getPhone2() %>-<%=mDTO.getPhone3() %><br> 
  				<label>전화번호</label> : ${param.phone1 }-${param.phone2 }-${param.phone3 }<br> 
- 				<a href="#void">로그인</a>
+ 				<a href="${CommonURL }/login/loginForm.jsp">로그인</a>
              <% 
             }else{//회원가입 실패
             %>	
             <h2>회원가입 실패</h2>
-            <%=mDTO.getName() %>님 회원가입 실패 하였습니다.<br>
+            <span><%=mDTO.getName() %></span>님 회원가입 실패 하였습니다.<br>
             <% 
+            }//else
             }//else
             %>
            

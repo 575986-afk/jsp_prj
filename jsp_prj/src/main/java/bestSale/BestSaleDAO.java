@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import db.DBConnection;
+import kr.co.sist.dao.GetConnection;
 import productDetail.ProductDTO;
 import usermain.RangeDTO;
 
@@ -33,9 +34,11 @@ public class BestSaleDAO {
 	    PreparedStatement pstmt=null;
 	    ResultSet rs=null;
 	    
+	    GetConnection gc=GetConnection.getInstance();
+	    
 	    try {
 	    	
-	    	con=DBConnection.getInstance().getConn();
+	    	con=gc.getConn("dbcp");
 	    	
 	    	String sql="SELECT p.PRODUCT_ID,"
 	    			+ "       p.PRODUCT_NAME,"
@@ -85,15 +88,15 @@ public class BestSaleDAO {
 	    	
 	    	con=DBConnection.getInstance().getConn();
 	    	
-	    	String sql="SELECT p.*, SUM(od.QUANTITY) sales_count"
-	    			+ " FROM PRODUCT p"
-	    			+ " INNER JOIN ORDER_DETAILS od"
-	    			+ " ON p.PRODUCT_ID = od.PRODUCT_ID"
-	    			+ " INNER JOIN ORDER o"
-	    			+ " ON od.ORDER_ID = o.ORDER_ID"
-	    			+ " WHERE o.ORDER_DATE >= SYSDATE - 7"
-	    			+ " GROUP BY p.PRODUCT_ID"
-	    			+ " ORDER BY sales_count DESC";
+	    	String sql="SELECT p.*, SUM(od.QUANTITY) sales_count "
+	    			+ "FROM PRODUCT p "
+	    			+ "INNER JOIN ORDER_DETAILS od "
+	    			+ "ON p.PRODUCT_ID = od.PRODUCT_ID "
+	    			+ "INNER JOIN ORDER o "
+	    			+ "ON od.ORDER_ID = o.ORDER_ID "
+	    			+ "WHERE o.ORDER_DATE >= SYSDATE - 7 "
+	    			+ "GROUP BY p.PRODUCT_ID "
+	    			+ "ORDER BY sales_count DESC ";
 	    	
 	    	pstmt=con.prepareStatement(sql);
 	    	
