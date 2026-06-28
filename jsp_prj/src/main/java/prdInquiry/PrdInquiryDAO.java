@@ -8,6 +8,7 @@ import java.util.List;
 
 import db.DBConnection;
 import inquiry.InquiryDTO;
+import kr.co.sist.dao.GetConnection;
 
 public class PrdInquiryDAO {
 
@@ -33,9 +34,11 @@ public class PrdInquiryDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        try {
-
-            con = DBConnection.getInstance().getConn();
+        GetConnection gc=GetConnection.getInstance();
+		
+		try {
+			
+			con=gc.getConn("dbcp");
 
             StringBuilder sql = new StringBuilder();
 
@@ -82,9 +85,11 @@ public class PrdInquiryDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        try {
-
-            con = DBConnection.getInstance().getConn();
+        GetConnection gc=GetConnection.getInstance();
+		
+		try {
+			
+			con=gc.getConn("dbcp");
 
             StringBuilder sql = new StringBuilder();
 
@@ -128,9 +133,11 @@ public class PrdInquiryDAO {
         Connection con = null;
         PreparedStatement pstmt = null;
 
-        try {
-
-            con = DBConnection.getInstance().getConn();
+        GetConnection gc=GetConnection.getInstance();
+		
+		try {
+			
+			con=gc.getConn("dbcp");
 
             StringBuilder sql = new StringBuilder();
 
@@ -169,9 +176,11 @@ public class PrdInquiryDAO {
         Connection con = null;
         PreparedStatement pstmt = null;
 
-        try {
-
-            con = DBConnection.getInstance().getConn();
+        GetConnection gc=GetConnection.getInstance();
+		
+		try {
+			
+			con=gc.getConn("dbcp");
 
             StringBuilder sql = new StringBuilder();
 
@@ -204,9 +213,11 @@ public class PrdInquiryDAO {
         Connection con = null;
         PreparedStatement pstmt = null;
 
-        try {
-
-            con = DBConnection.getInstance().getConn();
+        GetConnection gc=GetConnection.getInstance();
+		
+		try {
+			
+			con=gc.getConn("dbcp");
 
             StringBuilder sql = new StringBuilder();
 
@@ -235,9 +246,11 @@ public class PrdInquiryDAO {
     Connection con = null;
     PreparedStatement pstmt = null;
 
-    try {
-
-        con = DBConnection.getInstance().getConn();
+    GetConnection gc=GetConnection.getInstance();
+	
+	try {
+		
+		con=gc.getConn("dbcp");
 
         StringBuilder sql = new StringBuilder();
 
@@ -270,9 +283,11 @@ public class PrdInquiryDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        try {
-
-            con = DBConnection.getInstance().getConn();
+        GetConnection gc=GetConnection.getInstance();
+		
+		try {
+			
+			con=gc.getConn("dbcp");
 
             String sql =
                     "SELECT INQUIRY_SECRET FROM INQUIRY WHERE INQUIRY_ID = ?";

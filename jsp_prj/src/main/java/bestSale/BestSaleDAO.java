@@ -84,9 +84,11 @@ public class BestSaleDAO {
 	    PreparedStatement pstmt=null;
 	    ResultSet rs=null;
 	    
+	    GetConnection gc=GetConnection.getInstance();
+	    
 	    try {
 	    	
-	    	con=DBConnection.getInstance().getConn();
+	    	con=gc.getConn("dbcp");
 	    	
 	    	String sql="SELECT p.*, SUM(od.QUANTITY) sales_count "
 	    			+ "FROM PRODUCT p "
@@ -132,9 +134,11 @@ public class BestSaleDAO {
 	    PreparedStatement pstmt=null;
 	    ResultSet rs=null;
 	    
+	    GetConnection gc=GetConnection.getInstance();
+	    
 	    try {
 	    	
-	    	con=DBConnection.getInstance().getConn();
+	    	con=gc.getConn("dbcp");
 	    	
 	    	String sql="SELECT * FROM PRODUCT ORDER BY PRICE ASC";
 	    	
@@ -171,9 +175,11 @@ public class BestSaleDAO {
 	    PreparedStatement pstmt=null;
 	    ResultSet rs=null;
 	    
+	    GetConnection gc=GetConnection.getInstance();
+	    
 	    try {
 	    	
-	    	con=DBConnection.getInstance().getConn();
+	    	con=gc.getConn("dbcp");
 	    	
 	    	String sql="SELECT * FROM PRODUCT WHERE DISCOUNT >=50 ORDER BY DISCOUNT DESC";
 	    	

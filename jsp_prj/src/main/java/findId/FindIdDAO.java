@@ -6,21 +6,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import db.DBConnection;
+import kr.co.sist.dao.GetConnection;
 import signup.ClientDTO;
 
 public class FindIdDAO {
 
-	private static FindIdDAO fiDAO;
+	private static FindIdDAO fidDAO;
 	
 	private FindIdDAO() {
 	
 	}
 	
 	public static FindIdDAO getInstance() {
-		if(fiDAO==null) {
-			fiDAO=new FindIdDAO();
+		if(fidDAO==null) {
+			fidDAO=new FindIdDAO();
 		}
-		return fiDAO;
+		return fidDAO;
 	}//FindIdDAO
 	
 	//회원 이름과 이메일 정보로 회원 ID조회
@@ -32,9 +33,11 @@ public class FindIdDAO {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
-		try{
+		GetConnection gc=GetConnection.getInstance();
+		
+		try {
 			
-			con=DBConnection.getInstance().getConn();
+			con=gc.getConn("dbcp");
 			
 			String sql="SELECT CLIENT_ID FROM CLIENT WHERE CLIENT_NAME=? AND CLIENT_EMAIL=?";
 			

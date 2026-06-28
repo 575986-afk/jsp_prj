@@ -5,20 +5,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import db.DBConnection;
+import kr.co.sist.dao.GetConnection;
 
 public class ProductDetailDAO {
 
-private static ProductDetailDAO pddDAO;
+private static ProductDetailDAO pdDAO;
 	
 	private ProductDetailDAO() {
 		
 	}
 	
 	public static ProductDetailDAO getInstance() {
-		if(pddDAO==null) {
-			pddDAO=new ProductDetailDAO();
+		if(pdDAO==null) {
+			pdDAO=new ProductDetailDAO();
 		}
-		return pddDAO;
+		return pdDAO;
 	}
 	//상품 기본 정보 조회
 	public ProductDTO selectProductInfo(String prdID) {
@@ -29,9 +30,11 @@ private static ProductDetailDAO pddDAO;
 	    PreparedStatement pstmt = null;
 	    ResultSet rs = null;
 
+	    GetConnection gc=GetConnection.getInstance();
+	    
 	    try {
-
-	        con = DBConnection.getInstance().getConn();
+	    	
+	    	con=gc.getConn("dbcp");
 
 	        StringBuilder sql = new StringBuilder();
 
@@ -77,9 +80,11 @@ private static ProductDetailDAO pddDAO;
 	    PreparedStatement pstmt = null;
 	    ResultSet rs = null;
 
+	    GetConnection gc=GetConnection.getInstance();
+	    
 	    try {
-
-	        con = DBConnection.getInstance().getConn();
+	    	
+	    	con=gc.getConn("dbcp");
 
 	        StringBuilder sql = new StringBuilder();
 

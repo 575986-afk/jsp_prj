@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import db.DBConnection;
+import kr.co.sist.dao.GetConnection;
 import productDetail.ProductDTO;
 
 public class ProductSearchDAO {
@@ -32,9 +33,11 @@ public class ProductSearchDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        try {
-
-            con = DBConnection.getInstance().getConn();
+        GetConnection gc=GetConnection.getInstance();
+		
+		try {
+			
+			con=gc.getConn("dbcp");
 
             StringBuilder sql = new StringBuilder();
 

@@ -4,14 +4,14 @@ import signup.ClientDTO;
 
 public class FindIdService {
 	
-	private FindIdDAO fiDAO;
+	private FindIdDAO fidDAO;
 	
 	public FindIdService() {
-		fiDAO=FindIdDAO.getInstance();
+		fidDAO=FindIdDAO.getInstance();
 	}
 	
 	public ClientDTO findId(String clientName, String clientEmail) {
-		return fiDAO.selectClientId(clientName, clientEmail);
+		return fidDAO.selectClientId(clientName, clientEmail);
 	}
 	
 }

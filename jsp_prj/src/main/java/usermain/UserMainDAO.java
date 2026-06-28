@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import db.DBConnection;
+import kr.co.sist.dao.GetConnection;
 import productDetail.ProductDTO;
 
 public class UserMainDAO {
@@ -31,29 +32,30 @@ public class UserMainDAO {
 	public List<ProductDTO> selectBest(){
 		
 		
-		
 		List<ProductDTO> list=new ArrayList<>();
 		
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
+		GetConnection gc=GetConnection.getInstance();
+		
 		try {
 			
-			con=DBConnection.getInstance().getConn();
+			con=gc.getConn("dbcp");
 			
-			String sql="SELECT p.PRODUCT_ID,p.PRODUCT_NAME,SUM(od.QUANTITY) sales_count"
-					+ " FROM PRODUCT p"
-					+ " INNER JOIN ORDER_DETAILS od"
-					+ " ON p.PRODUCT_ID = od.PRODUCT_ID"
-					+ " GROUP BY p.PRODUCT_ID, p.PRODUCT_NAME"
-					+ " ORDER BY sales_count DESC";
+			String sql="SELECT p.PRODUCT_ID,p.PRODUCT_NAME,SUM(od.QUANTITY) sales_count "
+					+ "FROM PRODUCT p "
+					+ "INNER JOIN ORDER_DETAILS od "
+					+ "ON p.PRODUCT_ID = od.PRODUCT_ID "
+					+ "GROUP BY p.PRODUCT_ID, p.PRODUCT_NAME "
+					+ "ORDER BY sales_count DESC ";
 			
 			pstmt=con.prepareStatement(sql);
 			
 			rs=pstmt.executeQuery();
 			
-			while (rs.next()) {
+			if (rs.next()) {
 				ProductDTO pDTO=new ProductDTO();
 				
 				pDTO.setPrdID(rs.getString("PRODUCT_ID"));
@@ -81,8 +83,10 @@ public class UserMainDAO {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
+		GetConnection gc=GetConnection.getInstance();
+		
 		try {
-			con=DBConnection.getInstance().getConn();
+			con=gc.getConn("dbcp");
 			
 			String sql="SELECT PRODUCT_ID, PRODUCT_NAME FROM PRODUCT WHERE DISCOUNT > 0";
 			
@@ -121,9 +125,11 @@ public class UserMainDAO {
 	    Connection con=null;
 	    PreparedStatement pstmt=null;
 	    ResultSet rs=null;
+	    
+	    GetConnection gc=GetConnection.getInstance();
 
 	    try {
-	        con=DBConnection.getInstance().getConn();
+	    	con=gc.getConn("dbcp");
 
 	        String sql =
 	        "SELECT * FROM ( " +
@@ -171,8 +177,10 @@ public class UserMainDAO {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
+		GetConnection gc=GetConnection.getInstance();
+		
 		try {
-			con=DBConnection.getInstance().getConn();
+			con=gc.getConn("dbcp");
 		
 			String sql =
 					"SELECT COUNT(*) FROM PRODUCT WHERE " + range.getSearchType() + " LIKE ?";

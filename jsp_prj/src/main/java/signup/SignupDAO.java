@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import db.DBConnection;
+import kr.co.sist.dao.GetConnection;
 
 public class SignupDAO {
 
@@ -29,9 +30,11 @@ public class SignupDAO {
 		    PreparedStatement pstmt = null;
 		    ResultSet rs = null;
 
-		    try {
-
-		        con = DBConnection.getInstance().getConn();
+		    GetConnection gc=GetConnection.getInstance();
+			
+			try {
+				
+				con=gc.getConn("dbcp");
 
 		        String sql =
 		                "select count(*) " +
@@ -62,9 +65,11 @@ public class SignupDAO {
 		    Connection con = null;
 		    PreparedStatement pstmt = null;
 
-		    try {
-
-		        con = DBConnection.getInstance().getConn();
+		    GetConnection gc=GetConnection.getInstance();
+			
+			try {
+				
+				con=gc.getConn("dbcp");
 
 		        StringBuilder sql = new StringBuilder();
 
