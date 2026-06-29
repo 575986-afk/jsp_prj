@@ -34,7 +34,7 @@
                      
                      </a>&nbsp;&nbsp;
                   <a class="nav-link" style="color:#FFFFFF"
-                     aria-current="page" href="#void">로그아웃</a>
+                     aria-current="page" href="${CommonURL}/mypage/mypage.jsp">로그아웃</a>
                
                </c:otherwise>
                </c:choose>

@@ -1,5 +1,7 @@
 package signup;
 
+import java.security.MessageDigest;
+
 public class SignupService {
 
 	private SignupDAO sDAO;
@@ -10,6 +12,10 @@ public class SignupService {
 	
 	//신규 회원 정보 등록(회원가입 성공 여부 반환)
     public boolean addUser(ClientDTO cDTO) {
+    	
+    	if (cDTO == null) {
+			return false;
+		}
 
     	if(checkDupId(cDTO.getClientId())) {
             return false;
@@ -23,6 +29,10 @@ public class SignupService {
     //아이디 중복 체크
     public boolean checkDupId(String id) {
     	
+    	if(id==null&&id.trim().isEmpty()) {
+    		return true;
+    	}
+    	
     	ClientDTO cDTO=new ClientDTO();
     	
     	cDTO.setClientId(id);
@@ -31,29 +41,31 @@ public class SignupService {
     }
     //비밀번호 암호화 해시 처리
     public String hashingPassword(String pw) {
-
-        return pw;
+    	
+    	if(pw ==null) {
+    		return null;
+    	}
         
-//        String hash = "";
-//
-//        try {
-//
-//            MessageDigest md = MessageDigest.getInstance("SHA-256");
-//
-//            byte[] bytes = md.digest(pw.getBytes());
-//
-//            StringBuilder sb = new StringBuilder();
-//
-//            for(byte b : bytes) {
-//                sb.append(String.format("%02x", b));
-//            }
-//
-//            hash = sb.toString();
-//
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return hash;
+        String hash = "";
+
+        try {
+
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+            byte[] bytes = md.digest(pw.getBytes());
+
+            StringBuilder sb = new StringBuilder();
+
+            for(byte b : bytes) {
+                sb.append(String.format("%02x", b));
+            }
+
+            hash = sb.toString();
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return hash;
     }
 }

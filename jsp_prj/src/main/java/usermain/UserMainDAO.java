@@ -55,7 +55,7 @@ public class UserMainDAO {
 			
 			rs=pstmt.executeQuery();
 			
-			if (rs.next()) {
+			while (rs.next()) {
 				ProductDTO pDTO=new ProductDTO();
 				
 				pDTO.setPrdID(rs.getString("PRODUCT_ID"));

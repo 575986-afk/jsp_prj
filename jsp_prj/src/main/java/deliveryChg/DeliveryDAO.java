@@ -38,6 +38,18 @@ public class DeliveryDAO {
 			con=gc.getConn("dbcp");
 			
 			String sql="SELECT DELIVERY_ADDR FROM DELIVERY_DESTINATION WHERE CLIENT_NO=?";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1, clientId);
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+			}
+			
+			
 					
 		}catch(SQLException e) {
 			e.printStackTrace();

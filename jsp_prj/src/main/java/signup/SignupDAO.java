@@ -60,7 +60,7 @@ public class SignupDAO {
 	}
 	//신규 회원 정보 삽입(회원가입 처리)
 	public int insertClient(ClientDTO cDTO) {
-		 int rowCnt = 0;
+		 	int rowCnt = 0;
 
 		    Connection con = null;
 		    PreparedStatement pstmt = null;

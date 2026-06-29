@@ -3,6 +3,7 @@ package inquiry;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class InquiryDAO {
 	}
 	
 	//회원별 문의 목록 조회
-	public List<InquiryDTO> selectList(){
+	public List<InquiryDTO> selectList(String clientId){
 		
 		List<InquiryDTO> list=new ArrayList<InquiryDTO>();
 		
@@ -35,11 +36,79 @@ public class InquiryDAO {
 		
 		GetConnection gc=GetConnection.getInstance();
 		
-		
-		
+		try {
+			con=gc.getConn("dbcp");
+			
+			String sql="SELECT INQUIRY_ID, INQUIRY_TITLE, INQUIRY_DATE, ANSWER_STATUS FROM INQUIRY WHERE CLIENT_NO = ?";
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1, clientId);
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				InquiryDTO iDTO = new InquiryDTO();
+				iDTO.setInquiryId(rs.getString("INQUIRY_ID"));
+				iDTO.setInquiryTitle(rs.getString("INQUIRY_TITLE"));
+				iDTO.setInquiryDate(rs.getDate("INQUIRY_DATE"));
+				iDTO.setAnswerStatus(rs.getString("ANSWER_STATUS"));
+				
+				list.add(iDTO);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				gc.dbClose(rs, pstmt, con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		return list;
 	}
 	//회원별 문의 상세 조회
-//	public List<>
-}
+	public InquiryDTO selectDetail(String inquiryId) {
+		
+		InquiryDTO iDTO=null;
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		GetConnection gc=GetConnection.getInstance();
+		
+		try {
+			con=gc.getConn("dbcp");
+			
+			String sql="SELECT * FROM INQUIRY WHERE INQUIRY_ID = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, inquiryId);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				iDTO = new InquiryDTO();
+				iDTO.setInquiryId(rs.getString("INQUIRY_ID"));
+				iDTO.setInquiryDate(rs.getDate("INQUIRY_DATE"));
+				iDTO.setInquiryTitle(rs.getString("INQUIRY_TITLE"));
+				iDTO.setInquirySecret(rs.getString("INQUIRY_SECRET"));
+				iDTO.setInquiryContent(rs.getString("INQUIRY_CONTENT"));
+				iDTO.setAnswerStatus(rs.getString("ANSWER_STATUS"));
+				iDTO.setAnswer(rs.getString("ANSWER"));
+				iDTO.setAnswerDate(rs.getDate("ANSWER_DATE"));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				gc.dbClose(rs, pstmt, con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return iDTO;
+	}
+}//class
