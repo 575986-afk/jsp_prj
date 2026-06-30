@@ -111,35 +111,6 @@ $(function(){
 		//버튼을 클릭했을 때 input type="file"을 클릭한 이벤트를 발생
 		$("#profile").click();
 	});//click
-	
-	$("#btnSearch").click(function(){
-		
-		var param={ id:"${userInfo.id}"}
-		
-		$.ajax({
-			url:"searchMyPage.jsp",
-			type:"post",
-			data:param,
-			dataType:"json",
-			error:function( xhr ){
-				console.log( xhr.status+" / "+ xhr.statusText )
-			},
-			success:function( jsonObj ){
-				//
-				$("#profile")[0].src
-					="${ CommonURL }${ uploadDir }/profile/"+jsonObj.profile;
-				$("#name").val(jsonObj.name);
-				$("#email").val(jsonObj.email);
-				$("#phone").val(jsonObj.phone);
-				$("#zipcode").val(jsonObj.zipcode);
-				$("#address").val(jsonObj.address);
-				$("#address2").val(jsonObj.address2);
-				$("#ip").html(jsonObj.ip);
-				$("#input_date").html(jsonObj.input_date);
-			}
-			
-		});
-	});//click
 });//ready
 </script>
 </head>
@@ -214,8 +185,8 @@ $(function(){
 		<table style="margin: 0px auto">
 		<tr>
 		<td style="vertical-align: top;width: 300px ">
-		<img src="${ CommonURL }${ uploadDir }/profile/default_profile.png"
-		 style="border-radius: 150px; width: 150px; height: 150px" id="profile"/><br>
+		<img src="${ CommonURL }${ upoloadDir }/profile/default_profile.png"
+		 style="border-radius: 150px"/><br>
 		 <input type="file" name="profile" id="profile" style="display: none;"/>
 		 <input type="button" value="이미지업로드" class="btn btn-success btn-sm"
 		  id="btnPorfile"/>
@@ -225,45 +196,43 @@ $(function(){
 		<table>
 		<tr>
 		<td>아이디</td>
-		<td><strong><c:out value="${ userInfo.id }"/></strong>
-			<input type="button" value="조회" class="btn btn-warning btn-sm"
-			id="btnSearch"/></td>
+		<td><strong><c:out value="${ userInfo.id }"/></strong></td>
 		</tr>
 		<tr>
 		<td>이름</td>
-		<td><input type="text" id="name" name="name" value="" readonly="readonly"></td>
+		<td><input type="text" name="name" value="" readonly="readonly"></td>
 		</tr>
 		<tr>
 		<td>이메일</td>
-		<td><input type="text" id="email" name="email" value=""></td>
+		<td><input type="text" name="email" value=""></td>
 		</tr>
 		<tr>
 		<td>전화번호</td>
-		<td><input type="text" id="phone" name="phone" value=""></td>
+		<td><input type="text" name="email" value=""></td>
 		</tr>
 		<tr>
 		<td>우편번호</td>
-		<td><input type="text" id="zipcode" name="zipcode" value="" style="width: 70px"
+		<td><input type="text" name="zipcode" value="" style="width: 70px"
 				readonly="readonly"> 
 				<input type="button" value="검색" class="btn btn-success btn-sm"/></td>
 		</tr>
 		<tr>
 		<td>주소</td>
-		<td><input type="text" id="address" name="address" value="" style="width: 300px"
+		<td><input type="text" name="address" value="" style="width: 300px"
 				readonly="readonly"> 
 		</td>
 		</tr>
 		<tr>
 		<td>상세주소</td>
-		<td><input type="text" id="address2" name="address2" value="" style="width: 300px"/></td>
+		<td><input type="text" name="address2" value="" style="width: 300px"/></td>
 		</tr>
 		<tr>
 		<td>가입 ip주소</td>
-		<td><span id="ip"></span></td>
+		<td></td>
 		</tr>
 		<tr>
 		<td>가입일</td>
-		<td><span id="input_date"></span></td>
+		<td></td>
 		</tr>
 		<tr>
 		<td colspan="2" align="center">

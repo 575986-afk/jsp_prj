@@ -1,3 +1,4 @@
+<%@page import="kr.co.sist.board.BoardService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ include file="../include/siteProperty.jsp" %>
@@ -14,14 +15,6 @@
 
 
 <meta name="theme-color" content="#712cf9">
-
-<script src="http://localhost/jsp_prj/common/js/color-modes.js"></script>
-<link href="http://localhost/jsp_prj/common/css/bootstrap.min.css" rel="stylesheet"
-	>
-	
-<link href="http://localhost/jsp_prj/common/css/carousel.css" rel="stylesheet">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <c:import url="${CommonURL}/fragments/external_file.jsp"/>
 
@@ -110,10 +103,6 @@
 .blue{color: #0000FF;}
 .red{color: #FF0000;}
 </style>
-<script type="text/javascript">
-//var obj=new XMLHttpRequest();
-//alert(obj);
-</script>
 </head>
 <body>
    <svg xmlns="http://www.w3.org/2000/svg" class="d-none"> <symbol
@@ -175,28 +164,46 @@
    </div>
    <header data-bs-theme="dark">
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-         <c:import url="/fragments/navigationBar.jsp"/>
+         <c:import url="${CommonURL}/fragments/navigationBar.jsp"/>
       </nav>
    </header>
    <main>
-      <div id="myCarousel" class="carousel slide mb-6"
-         data-bs-ride="carousel">
-        <c:import url="${CommonURL}/fragments/carousel.jsp"/>
-      </div>
-      <div>
-      <a href="${CommonURL }/board/boardList.jsp">게시판</a>
-      </div>
-      <!-- Marketing messaging and featurettes
-  ================================================== -->
-      <!-- Wrap the rest of the page in another container to center all the content. -->
-      <div class="container marketing">
-         <!-- Three columns of text below the carousel -->
-         <c:import url="${CommonURL}/fragments/bestProduct.jsp"/>
-         <!-- /.row -->
-         <!-- START THE FEATURETTES -->
-         <c:import url="${CommonURL}/fragments/productList.jsp"/>
-         <!-- /END THE FEATURETTES -->
-      </div>
+   <div id="boardDiv">
+   <%
+   BoardService bs=new BoardService();
+   //1. 총 레코드 수
+   int totalCount=0;
+   totalCount=bs.totalCount();
+   //2. 한 화면에 보여질 게시글의 수
+   int pageScale=10;
+   //3. 총 페이지 수
+   int totalPage=(int)Math.ceil((double)totalCount/pageScale);
+   //4. 시작번호 구하기
+   String tempPage=request.getParameter("currentPage");
+   int currentPage=1;
+   
+   if(tempPage!=null){//pagination을 클릭했을 때 1,2,3,4 해당 페이지 번호가 입력
+	   currentPage=Integer.parseInt(tempPage);
+   }
+   
+   int startNum=1;
+   startNum=currentPage*pageScale-pageScale+1;
+   
+   pageContext.setAttribute("totalCount", totalCount);
+   pageContext.setAttribute("pageScale", pageScale);
+   pageContext.setAttribute("totalPage", totalPage);
+   pageContext.setAttribute("startNum", startNum);
+   
+   %>
+   총 레코드 수: ${totalCount }건<br>
+   한 화면에 보여질 게시글의 수: ${pageScale }건<br>
+   총 페이지 수: ${totalPage }장<br>
+   시작 번호: ${startNum }<br>
+   
+   <c:forEach var="i" begin="1" end="5" step="1">
+   <a href="boardList.jsp?currentPage=${i }">${i }</a>
+   </c:forEach>
+   </div>
       <!-- /.container -->
       <!-- FOOTER -->
       	<footer class="container">

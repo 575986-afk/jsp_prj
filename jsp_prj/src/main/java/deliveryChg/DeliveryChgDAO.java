@@ -9,17 +9,17 @@ import java.util.List;
 
 import kr.co.sist.dao.GetConnection;
 
-public class DeliveryDAO {
+public class DeliveryChgDAO {
 	
-	private static DeliveryDAO dDAO;
+	private static DeliveryChgDAO dDAO;
 	
-	private DeliveryDAO() {
+	private DeliveryChgDAO() {
 		
 	}
 	
-	public static DeliveryDAO getInstance() {
+	public static DeliveryChgDAO getInstance() {
 		if(dDAO==null) {
-			dDAO=new DeliveryDAO();
+			dDAO=new DeliveryChgDAO();
 		}
 		return dDAO;
 	}
@@ -37,7 +37,7 @@ public class DeliveryDAO {
 		try {
 			con=gc.getConn("dbcp");
 			
-			String sql="SELECT DELIVERY_ADDR FROM DELIVERY_DESTINATION WHERE CLIENT_NO=?";
+			String sql="SELECT DELIVERY_POSTCODE,DELIVERY_ADDR,FIRST_DESTINATION FROM DELIVERY_DESTINATION WHERE CLIENT_NO=?";
 			
 			pstmt=con.prepareStatement(sql);
 			
@@ -46,11 +46,14 @@ public class DeliveryDAO {
 			rs=pstmt.executeQuery();
 			
 			while(rs.next()) {
+				DeliveryDTO dDTO=new DeliveryDTO();
+				dDTO.setDeliveryPost(rs.getString("DELIVERY_POSTCODE"));
+				dDTO.setDeliveryAddr(rs.getString("DELIVERY_ADDR"));
+				dDTO.setFirstDestination(rs.getBoolean("FIRST_DESTINATION"));
 				
+				list.add(dDTO);
 			}
 			
-			
-					
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -74,6 +77,8 @@ public class DeliveryDAO {
 		
 		GetConnection gc=GetConnection.getInstance();
 		
+		String sql="";
+		
 		try {
 			con=gc.getConn("dbcp");
 		}catch(SQLException e) {
@@ -96,6 +101,8 @@ public class DeliveryDAO {
 		PreparedStatement pstmt=null;
 		
 		GetConnection gc=GetConnection.getInstance();
+		
+		String sql="INSERT INTO DELIVERY_DESTINATION (DELIVERY_POSTCODE, DELIVERY_ADDR, FIRST_DESTINATION, DELIVERY_INPUT_DATE, CLIENT_NO) VALUES (?, ?, ?, SYSDATE, ?)";
 		
 		try {
 			con=gc.getConn("dbcp");

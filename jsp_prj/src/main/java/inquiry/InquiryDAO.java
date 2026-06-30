@@ -39,7 +39,7 @@ public class InquiryDAO {
 		try {
 			con=gc.getConn("dbcp");
 			
-			String sql="SELECT INQUIRY_ID, INQUIRY_TITLE, INQUIRY_DATE, ANSWER_STATUS FROM INQUIRY WHERE CLIENT_NO = ?";
+			String sql="SELECT i.INQUIRY_ID, i.INQUIRY_TITLE, i.INQUIRY_DATE, i.ANSWER_STATUS FROM INQUIRY i INNER JOIN INQUIRY_TYPE t ON i.INQUIRY_CODE=t.INQUIRY_CODE WHERE CLIENT_NO =? AND t.INQUIRY_CODE IN ('TYP000001','TYP000002')";
 			
 			pstmt=con.prepareStatement(sql);
 			
@@ -82,7 +82,7 @@ public class InquiryDAO {
 		try {
 			con=gc.getConn("dbcp");
 			
-			String sql="SELECT * FROM INQUIRY WHERE INQUIRY_ID = ?";
+			String sql="SELECT i.*, t.* FROM INQUIRY i INNER JOIN INQUIRY_TYPE t ON i.INQUIRY_CODE=t.INQUIRY_CODE WHERE i.INQUIRY_ID = ? AND t.INQUIRY_CODE IN ('TYP000001','TYP000002')";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, inquiryId);
