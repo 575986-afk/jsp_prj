@@ -11,8 +11,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BoardDTO {
-	private int num;
-	private String id,title,content,ip,cnt;	
-	private Date input_date;	
+	private int num,cnt;
+	private String id,title,content,ip;	
+	private Date inputDate;	
 
 }

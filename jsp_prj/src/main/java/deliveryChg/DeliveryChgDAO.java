@@ -24,7 +24,7 @@ public class DeliveryChgDAO {
 		return dDAO;
 	}
 	//회원별 배송지 목록 조회
-	public List<DeliveryDTO> selectDeliveryList(String clientId){
+	public List<DeliveryDTO> selectDeliveryList(String clientNo){
 		
 		List<DeliveryDTO> list=new ArrayList<>();
 		
@@ -41,7 +41,7 @@ public class DeliveryChgDAO {
 			
 			pstmt=con.prepareStatement(sql);
 			
-			pstmt.setString(1, clientId);
+			pstmt.setString(1, clientNo);
 			
 			rs=pstmt.executeQuery();
 			
@@ -49,7 +49,7 @@ public class DeliveryChgDAO {
 				DeliveryDTO dDTO=new DeliveryDTO();
 				dDTO.setDeliveryPost(rs.getString("DELIVERY_POSTCODE"));
 				dDTO.setDeliveryAddr(rs.getString("DELIVERY_ADDR"));
-				dDTO.setFirstDestination(rs.getBoolean("FIRST_DESTINATION"));
+				dDTO.setFirstDestination("Y".equals(rs.getString("FIRST_DESTINATION")));
 				
 				list.add(dDTO);
 			}
@@ -66,32 +66,7 @@ public class DeliveryChgDAO {
 		return list;
 		
 	}
-	//배송지 상세 정보 조회
-	public DeliveryDTO selectDeliveryDetail(String deliveryId) {
-		
-		DeliveryDTO dDTO=null;
-		
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		
-		GetConnection gc=GetConnection.getInstance();
-		
-		String sql="";
-		
-		try {
-			con=gc.getConn("dbcp");
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				gc.dbClose(rs, pstmt, con);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return dDTO;
-	}
+	
 	//신규 배송지 등록
 	public int insertNewDelivery(DeliveryDTO dDTO) {
 		
@@ -106,6 +81,16 @@ public class DeliveryChgDAO {
 		
 		try {
 			con=gc.getConn("dbcp");
+			
+			pstmt=con.prepareStatement(sql);
+			
+			pstmt.setString(1, dDTO.getDeliveryPost());
+			pstmt.setString(2, dDTO.getDeliveryAddr());
+			pstmt.setString(3, dDTO.isFirstDestination()?"Y":"N");
+			pstmt.setString(4, dDTO.getClientNo());
+			
+			cnt=pstmt.executeUpdate();
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -117,50 +102,40 @@ public class DeliveryChgDAO {
 		}
 		return cnt;
 	}
-	//배송 상태 및 내용 업데이트
-	public int updateDeliveryDetail(String deliveryId) {
+	
+	//배송지 정보 삭제
+	public int removeDelivery(DeliveryDTO dDTO) {
 		
-		int cnt=0;
-		
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		
-		GetConnection gc=GetConnection.getInstance();
-		
-		try {
-			con=gc.getConn("dbcp");
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				gc.dbClose(null, pstmt, con);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return cnt;
-	}
-	//배송지 정보 수정
-	public int modifyDelivery(DeliveryDTO dDTO) {
-		
-		int cnt=0;
-		
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		
-		GetConnection gc=GetConnection.getInstance();
-		
-		try {
-			con=gc.getConn("dbcp");
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				gc.dbClose(null, pstmt, con);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return cnt;
+		 int cnt = 0;
+
+		    Connection con = null;
+		    PreparedStatement pstmt = null;
+
+		    GetConnection gc = GetConnection.getInstance();
+
+		    try {
+		        con = gc.getConn("dbcp");
+
+		        String sql = "DELETE FROM DELIVERY_DESTINATION "
+		                   + "WHERE CLIENT_NO = ? AND DELIVERY_ID = ?";
+
+		        pstmt = con.prepareStatement(sql);
+
+		        pstmt.setString(1, dDTO.getClientNo());
+		        pstmt.setString(2, dDTO.getDeliveryID());
+
+		        cnt = pstmt.executeUpdate();
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        try {
+		            gc.dbClose(null, pstmt, con);
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+
+		    return cnt;
 	}
 }

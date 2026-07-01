@@ -4,7 +4,6 @@
     pageEncoding="UTF-8"%>
 <%
 	StringBuilder flagURL=(StringBuilder)application.getAttribute("CommonURL");
-	System.out.println("--------------"+flagURL);
 	if(flagURL==null){
 	SitePropertyVO spVO=SiteProperty.spVO;
 

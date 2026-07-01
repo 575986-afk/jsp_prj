@@ -13,11 +13,12 @@ public class DeliveryDTO {
 	private String deliveryTel;
 	private boolean firstDestination;
 	private Date inputDate;
+	private String clientNo;
 	public DeliveryDTO() {
 		super();
 	}
 	public DeliveryDTO(String deliveryID, String deliveryPost, String deliveryAddr, String clientName, String clientTel,
-			String deliveryName, String deliveryTel, boolean firstDestination, Date inputDate) {
+			String deliveryName, String deliveryTel, boolean firstDestination, Date inputDate, String clientNo) {
 		super();
 		this.deliveryID = deliveryID;
 		this.deliveryPost = deliveryPost;
@@ -28,6 +29,7 @@ public class DeliveryDTO {
 		this.deliveryTel = deliveryTel;
 		this.firstDestination = firstDestination;
 		this.inputDate = inputDate;
+		this.clientNo = clientNo;
 	}
 	public String getDeliveryID() {
 		return deliveryID;
@@ -83,13 +85,18 @@ public class DeliveryDTO {
 	public void setInputDate(Date inputDate) {
 		this.inputDate = inputDate;
 	}
+	public String getClientNo() {
+		return clientNo;
+	}
+	public void setClientNo(String clientNo) {
+		this.clientNo = clientNo;
+	}
 	@Override
 	public String toString() {
 		return "DeliveryDTO [deliveryID=" + deliveryID + ", deliveryPost=" + deliveryPost + ", deliveryAddr="
 				+ deliveryAddr + ", clientName=" + clientName + ", clientTel=" + clientTel + ", deliveryName="
 				+ deliveryName + ", deliveryTel=" + deliveryTel + ", firstDestination=" + firstDestination
-				+ ", inputDate=" + inputDate + "]";
+				+ ", inputDate=" + inputDate + ", clientNo=" + clientNo + "]";
 	}
-	
 	
 }
